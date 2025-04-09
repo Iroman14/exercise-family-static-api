@@ -14,11 +14,9 @@ jackson_family = Family("Jackson")
 def handle_invalid_usage(error):
     return jsonify(error.to_dict()), error.status_code
 
-
 @app.route("/")
 def sitemap():
     return generate_sitemap(app)
-
 
 @app.route("/members", methods=["GET"])
 def get_members():
@@ -27,28 +25,26 @@ def get_members():
         print(members)
         return jsonify(members), 200
     else:
-        return jsonify({'error': 'Miembros no encotrados'}), 400
+        return jsonify({'error': 'Miembros no encotrados'}), 404
 
-
-@app.route('/members/<int:id>', methods=['GET'])
+@app.route('/members/<int:id>', methods=["GET"])
 def get_member(id):
     member = jackson_family.get_member(id)
     if member is not None:
         return jsonify(member), 200
     else:
-        return jsonify({'error': 'Miembro no encotrado'}), 400
+        return jsonify({'error': 'Miembro no encotrado'}), 407
 
-@app.route('/members/<int:id>', methods=['DELETE'])
+@app.route('/members/<int:id>', methods=["DELETE"])
 def delete_member(id):
     member = jackson_family.get_member(id)
     if member is not None:
         member = jackson_family.delete_member(id)
         return jsonify({'done':True}), 200
     else:
-        return jsonify({'error': 'Miembro no encotrado'}), 400
+        return jsonify({'error': 'Miembro no encotrado'}), 404
 
-
-@app.route('/members', methods=['POST'])
+@app.route('/members', methods=["POST"])
 def add_member():
     member = request.json
     if member is not None:
@@ -56,7 +52,6 @@ def add_member():
         return jsonify(new_member), 200
     else:
         return jsonify({'error': 'Información Invalida'}), 400
-
 
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3000))

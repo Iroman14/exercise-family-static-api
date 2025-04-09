@@ -18,7 +18,7 @@ class Family:
                 "age": 35,
                 "lucky_numbers":[10,4,3],
             },
-              {
+            {
                 "id": self._generateId(),
                 "first_name":"Jimmy",
                 "last_name": self.last_name,
